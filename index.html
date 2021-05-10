@@ -5,11 +5,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Calculator</title>
 </head>
 
 <body>
-
+    <div id="calc-container">
+        <div id="calc-disp">10000</div>
+        <div id="calc-buttons">
+            <div id="nums">
+                <div class="col1">
+                    <button data-val="9" class="btn num-btn">9</button>
+                    <button data-val="8" class="btn num-btn">6</button>
+                    <button data-val="7" class="btn num-btn">3</button>
+                    <button data-val="=" class="btn equalTo-btn">=</button>
+                </div>
+                <div class="col2">
+                    <button data-val="8" class="btn num-btn">8</button>
+                    <button data-val="5" class="btn num-btn">5</button>
+                    <button data-val="2" class="btn num-btn">2</button>
+                    <button data-val="0" class="btn num-btn">0</button>
+                </div>
+                <div class="col3">
+                    <button data-val="7" class="btn num-btn">7</button>
+                    <button data-val="4" class="btn num-btn">4</button>
+                    <button data-val="1" class="btn num-btn">1</button>
+                    <button data-val="." class="btn num-btn">.</button>
+                </div>
+            </div>
+            <div id="operations">
+                <button data-val="+" class="btn operation-btn">&#x2b;</button>
+                <button data-val="-" class="btn operation-btn">&minus;</button>
+                <button data-val="*" class="btn operation-btn">&#215;</button>
+                <button data-val="/" class="btn operation-btn">&#xf7;</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
 </body>
 
 </html>
