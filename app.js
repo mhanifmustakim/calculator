@@ -3,7 +3,13 @@
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
-const divide = (a, b) => a / b;
+const divide = (a, b) => {
+    if (num2 == 0) {
+        alert("Do Not Divide By Zero Please");
+        return "error";
+    }
+    return a / b;
+};
 
 const operate = (operation, num1, num2) => {
     switch (operation) {
@@ -42,6 +48,10 @@ const saveFirst = (e) => {
 const returnResult = () => {
     num2 = parseFloat(calcDisplay.textContent);
     result = operate(operation, num1, num2);
+    if (result === "error") {
+        reset();
+        return
+    }
     if (result * 100 % 100 !== 0) {
         result = result.toFixed(2);
     }
@@ -49,6 +59,15 @@ const returnResult = () => {
     [num1, num2] = [result, 0];
     operation = null;
     delBtn.disabled = true;
+}
+
+const reset = () => {
+    calcDisplay.textContent = "0";
+    delBtn.disabled = false;
+    num1 = null;
+    num2 = null;
+    result = null;
+    operation = null;
 }
 
 //ACTUAL CODE
@@ -82,13 +101,7 @@ operations.forEach(btn => {
 
 equalToBtn.addEventListener("click", returnResult);
 
-clearBtn.addEventListener("click", () => {
-    calcDisplay.textContent = "0";
-    num1 = null;
-    num2 = null;
-    result = null;
-    operation = null;
-})
+clearBtn.addEventListener("click", reset)
 
 delBtn.addEventListener("click", () => {
     if (parseFloat(calcDisplay.textContent) / 10 < 1) {
