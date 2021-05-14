@@ -30,6 +30,7 @@ const printNum = (e) => {
     } else {
         calcDisplay.textContent += e.target.innerText;
     }
+    delBtn.disabled = false;
 }
 
 const saveFirst = (e) => {
@@ -47,6 +48,7 @@ const returnResult = () => {
     calcDisplay.textContent = result;
     [num1, num2] = [result, 0];
     operation = null;
+    delBtn.disabled = true;
 }
 
 //ACTUAL CODE
@@ -55,6 +57,8 @@ const calcDisplay = document.querySelector("#calc-disp");
 const nums = document.querySelectorAll(".num-btn");
 const operations = document.querySelectorAll(".operation-btn");
 const equalToBtn = document.querySelector(".equalTo-btn");
+const clearBtn = document.querySelector(".clear-btn");
+const delBtn = document.querySelector(".delete-btn");
 
 let num1 = null;
 let num2 = null;
@@ -62,6 +66,7 @@ let result = null;
 let operation = null;
 calcDisplay.textContent = "0";
 
+//EVENT LISTENERS
 nums.forEach(num => num.addEventListener("click", printNum))
 
 operations.forEach(btn => {
@@ -77,5 +82,20 @@ operations.forEach(btn => {
 
 equalToBtn.addEventListener("click", returnResult);
 
+clearBtn.addEventListener("click", () => {
+    calcDisplay.textContent = "0";
+    num1 = null;
+    num2 = null;
+    result = null;
+    operation = null;
+})
 
+delBtn.addEventListener("click", () => {
+    if (parseFloat(calcDisplay.textContent) / 10 < 1) {
+        calcDisplay.textContent = "0";
+    } else {
+        calcDisplay.textContent = calcDisplay.textContent.substring(0, calcDisplay.textContent.length
+            - 1);
+    }
+})
 
