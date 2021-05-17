@@ -11,7 +11,7 @@ body{
 }
 
 h1{
-    font-size: 4rem;
+    font-size: 3rem;
     font-family: monospace;
     margin: 5% auto 5% auto;
     text-align: center;
@@ -78,5 +78,8 @@ h1{
     #calc-container{
         margin: 0 auto;
         max-width: 600px;
+    }
+    h1{
+        font-size: 4rem;
     }
 }
