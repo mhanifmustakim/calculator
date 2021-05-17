@@ -14,17 +14,25 @@ const divide = (a, b) => {
 const operate = (operation, num1, num2) => {
     switch (operation) {
         case "add":
+        case "+":
             return add(num1, num2);
         case "subtract":
+        case "-":
             return subtract(num1, num2);
         case "multiply":
+        case "*":
             return multiply(num1, num2);
         case "divide":
+        case "/":
             return divide(num1, num2);
     }
 };
 
 const printNum = (e) => {
+    if (calcDisplay.textContent.length == 10) {
+        alert("Sorry, this calc only supports 10 digit operations!")
+        return
+    }
     if (calcDisplay.textContent == "0" && e.target.innerText == "0") {
         return
     }
@@ -70,6 +78,23 @@ const reset = () => {
     operation = null;
 }
 
+const saveNum = (e) => {
+    if (operation === null) {
+        saveFirst(e);
+    } else {
+        returnResult();
+        operation = e.target.classList[2];
+    }
+}
+
+const deleteNum = () => {
+    if (parseFloat(calcDisplay.textContent) / 10 < 1) {
+        calcDisplay.textContent = "0";
+    } else {
+        calcDisplay.textContent = calcDisplay.textContent.substring(0, calcDisplay.textContent.length
+            - 1);
+    }
+}
 //ACTUAL CODE
 /***************************************************/
 const calcDisplay = document.querySelector("#calc-disp");
@@ -89,26 +114,77 @@ calcDisplay.textContent = "0";
 nums.forEach(num => num.addEventListener("click", printNum))
 
 operations.forEach(btn => {
-    btn.addEventListener("click", (e) => {
-        if (operation === null) {
-            saveFirst(e);
-        } else {
-            returnResult();
-            operation = e.target.classList[2];
-        }
-    })
+    btn.addEventListener("click", saveNum)
 })
 
 equalToBtn.addEventListener("click", returnResult);
 
 clearBtn.addEventListener("click", reset)
 
-delBtn.addEventListener("click", () => {
-    if (parseFloat(calcDisplay.textContent) / 10 < 1) {
-        calcDisplay.textContent = "0";
-    } else {
-        calcDisplay.textContent = calcDisplay.textContent.substring(0, calcDisplay.textContent.length
-            - 1);
+delBtn.addEventListener("click", deleteNum)
+//KEYBOARD SUPPORT
+window.addEventListener("keydown", (e) => {
+    switch (e.key) {
+        case "0":
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+        case ".":
+            printNumKey(e.key)
+            break
+        case "*":
+        case "/":
+        case "+":
+        case "-":
+            operationKey(e.key)
+            break
+        case "Enter":
+        case "=":
+            returnResult()
+            break;
+        case "Backspace":
+            deleteNum()
+            break;
+        case "c":
+        case "Delete":
+        case "Escape":
+            reset();
+    }
+
+    function printNumKey(char) {
+        if (calcDisplay.textContent.length == 10) {
+            alert("Sorry, this calc only supports 10 digit operations!")
+            return
+        }
+        if (calcDisplay.textContent == "0" && char == "0") {
+            return
+        }
+        if (calcDisplay.textContent.indexOf(".") != -1 && char == ".") {
+            return
+        }
+        if (calcDisplay.textContent == "0" || parseFloat(calcDisplay.textContent) == result) {
+            calcDisplay.textContent = char;
+        } else {
+            calcDisplay.textContent += char;
+        }
+        delBtn.disabled = false;
+    }
+
+    function operationKey(char) {
+        if (operation === null) {
+            num1 = parseFloat(calcDisplay.textContent);
+            calcDisplay.textContent = "0";
+            operation = char;
+        } else {
+            returnResult();
+            operation = char;
+        }
     }
 })
 
